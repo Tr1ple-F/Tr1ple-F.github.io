@@ -1,0 +1,56 @@
+baseURL = 'https://tr1ple-f.github.io/'
+languageCode = 'en-us'
+title = "Tr1ple-F's Blog"
+theme = 'typo'
+
+[taxonomies]
+tag = 'tags'
+
+[params]
+description = "A blog about artificial intelligence, natural language processing, writing enterprise software, law and other random thoughts."
+
+# Appearance settings
+theme = 'auto'
+colorPalette = 'catpuccin'
+hideHeader = false
+
+# Intro on main page, content is markdown
+homeIntroTitle = 'Cheers!'
+homeIntroContent = """
+I am a software engineer / founder. I do research in AI/ML and love distributed systems, low level programming, and learning by debugging.
+"""
+
+# Collection to display on home
+homeCollectionTitle = 'Posts'
+homeCollection = 'posts'
+
+# Lists parameters
+paginationSize = 100
+listSummaries = true
+listDateFormat = '2 Jan 2006'
+
+# Breadcrumbs
+breadcrumbs = true
+
+# Social icons
+[[params.social]]
+name = "linkedin"
+url = "https://www.linkedin.com/in/finlay-fehlauer"
+
+[[params.social]]
+name = "github"
+url = "https://github.com/Tr1ple-F"
+
+# Main menu pages
+[[params.menu]]
+name = "home"
+url = "/"
+
+[[params.menu]]
+name = "posts"
+url = "/posts"
+
+# Syntax highlight on code blocks
+[markup]
+[markup.highlight]
+style = 'algol'
