@@ -1,1 +1,4 @@
 
+[submodule "themes/typo"]
+	path = themes/typo
+	url = https://github.com/Tr1ple-F/typo.git
