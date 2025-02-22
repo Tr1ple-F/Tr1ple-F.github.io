@@ -53,4 +53,4 @@ url = "/posts"
 # Syntax highlight on code blocks
 [markup]
 [markup.highlight]
-style = 'algol'
+style = 'monokai'
