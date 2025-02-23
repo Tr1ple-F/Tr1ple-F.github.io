@@ -29,7 +29,7 @@
 <meta property="og:url" content="http://localhost:1313/posts/mongodb-spring-date-formats/">
   <meta property="og:site_name" content="Tr1ple-F&#39;s Blog">
   <meta property="og:title" content="Spring Boot, MongoDB and the Java DateTime API">
-  <meta property="og:description" content="A quick fix guide on how avoid java.util.Date">
+  <meta property="og:description" content="A quick guide on how avoid java.util.Date">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -52,7 +52,7 @@
 
 
 
-<link rel="stylesheet" href="/assets/combined.min.02176341f87674da2e49fdabffde02bd9b2630044293195c0b889898b62410fc.css" media="all">
+<link rel="stylesheet" href="/assets/combined.min.b049a41c66c297b8ff3522b01b2edc5922f184c22d183a603feeedad62fabe52.css" media="all">
 
 
 
@@ -136,7 +136,7 @@
 
     <h1 class="single-title">Spring Boot, MongoDB and the Java DateTime API</h1>
     
-    <p class="single-summary">A quick fix guide on how avoid <code>java.util.Date</code></p>
+    <p class="single-summary">A quick guide on how avoid <code>java.util.Date</code></p>
     
 
     
@@ -165,11 +165,11 @@
     <p><strong>Table of contents</strong></p>
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#what--why">What &amp; Why?</a>
+    <li><a href="#date-handling-in-the-mongodb-driver">Date Handling in the MongoDB Driver</a>
       <ul>
         <li><a href="#background">Background</a></li>
         <li><a href="#the-issue">The Issue</a></li>
-        <li><a href="#mongodb-codecs">MongoDB Codecs</a></li>
+        <li><a href="#codecs">Codecs</a></li>
       </ul>
     </li>
     <li><a href="#the-fix">The Fix</a></li>
@@ -181,15 +181,16 @@
   
 
   <div class="single-content">
-    <h2 class="heading" id="what--why">
-  What &amp; Why?
-  <a class="anchor" href="#what--why">#</a>
+    <h2 class="heading" id="date-handling-in-the-mongodb-driver">
+  Date Handling in the MongoDB Driver
+  <a class="anchor" href="#date-handling-in-the-mongodb-driver">#</a>
 </h2>
+<p>I will provide a bit of context here to explain our solution. You can also jump ahead <a href="#the-fix">here</a>.</p>
 <h3 class="heading" id="background">
   Background
   <a class="anchor" href="#background">#</a>
 </h3>
-<p>In the techstack of my previous startup we used Java/Spring as our backend framework and MongoDB as database.
+<p>In the techstack of my startup we used Java/Spring as our backend framework and MongoDB as database.
 One of the reasons for choosing this stack was the security features provided by Spring (the headaches of which I will describe in a future post).
 As for our database, we had a fairly flexible schema of documents we had to accommodate.</p>
 <p>Take these two example documents:</p>
@@ -209,37 +210,37 @@ As for our database, we had a fairly flexible schema of documents we had to acco
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;bar&#34;</span>: <span style="color:#e6db74">&#34;2021-01-01T12:00:00&#34;</span>
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>We were constrained by</p>
+</span></span></code></pre></div><p>Our constraints were</p>
 <ol>
 <li>we couldn&rsquo;t fix the keys inside <code>params</code> from our application side</li>
 <li>we couldn&rsquo;t fix the types of the keys ahead of time.</li>
 </ol>
-<p>Hence our Java code looked something like this:</p>
+<p>Hence our Java code looked something like</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDocument</span> {
 </span></span><span style="display:flex;"><span>    String name;
 </span></span><span style="display:flex;"><span>    LocalDateTime time;
 </span></span><span style="display:flex;"><span>    Map<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> params;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>where our backend code would rely on MongoDB to correctly serialize the <code>params</code> map which we would then process.</p>
+</span></span></code></pre></div><p>where our backend code would rely on MongoDB to correctly serialize the <code>params</code> map for later processing.</p>
 <h3 class="heading" id="the-issue">
   The Issue
   <a class="anchor" href="#the-issue">#</a>
 </h3>
 <p>When serializing the <code>time</code> field, MongoDB would correctly parse the BSON representation to <code>LocalDateTime</code> (i.e. the JSR-310 <strong>Java 8 Date/Time API</strong>).
-However, since MongoDB&rsquo;s default handling of <code>BSONType.DATE_TIME</code> is still <code>java.util.Date</code> our <code>params</code> map would contain objects of type <code>java.util.Date</code> which we would have to re-cast.
-Naturally, this introduced many bugs and crashes on our end whenever we had some random <code>java.util.Date</code> object flying through our memory. Pretty much from the start of our project this bug bothered us
-but we didn&rsquo;t manage to take care of it until almost 2.5 years later.</p>
-<h3 class="heading" id="mongodb-codecs">
-  MongoDB Codecs
-  <a class="anchor" href="#mongodb-codecs">#</a>
+MongoDB&rsquo;s default handling of <code>BSONType.DATE_TIME</code> results in <code>java.util.Date</code> objects appearing in the params map.</p>
+<p>This forced us to manually re-cast, leading to frequent bugs and crashes.
+The date bug bothered us from the start of our project but we didn&rsquo;t manage to take care of it until almost 2.5 years later.</p>
+<h3 class="heading" id="codecs">
+  Codecs
+  <a class="anchor" href="#codecs">#</a>
 </h3>
 <p>The origin of this issue is how the Java MongoDB driver deals with codecs.
 The MongoDB driver supports JSR-310 since version 3.7 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>; however, documents get parsed as subparts depending on which codecs fits.
-For fields this can happen completely independently of each other which means two fields could use completely different codecs.
-The relevant class handles codec selection for BSON docuemnts is the <code>DocumentCodecProvider</code>.
+For fields this can happen completely independently of each other which means two fields could use completely different codecs.</p>
+<p>The relevant class handles codec selection for BSON documents is the <code>DocumentCodecProvider</code>.
 It has a function <code>get(Class&lt;T&gt; clazz, CodecRegistry)</code> which determines the codecs that will be used throughout the encoding/decoding.
-Naturally, MongoDB has a default configuration of how BSON types should be cast to Java types (e.g. <code>BSONType.DOUBLE</code> to <code>java.lang.Double</code>).
-Since our Java declaration of <code>params</code> doesn&rsquo;t enforce any type restrictions, MongoDB will refer to the defaults provided through the <code>BsonTypeClassMap.DEFAULT_BSON_TYPE_CLASS_MAP</code>.
+Naturally, MongoDB has a default configuration of how BSON types should be cast to Java types (e.g. <code>BSONType.DOUBLE</code> to <code>java.lang.Double</code>).</p>
+<p>Since our Java declaration of <code>params</code> doesn&rsquo;t enforce any type restrictions, MongoDB will refer to the defaults provided through the <code>BsonTypeClassMap.DEFAULT_BSON_TYPE_CLASS_MAP</code>.
 <a href="https://github.com/mongodb/mongo-java-driver/blob/fb3f30b79aecfa5b17404c33a29fb1f5fb6f4ffb/bson/src/main/org/bson/codecs/BsonTypeClassMap.java#L112">Here</a> we find the culprit: <code>BsonType.DATE_TIME</code> defaults to <code>Date.class</code>.
 So to fix our problem we will have to tell MongoDB to use a different default codec and override the <code>CodecRegistry</code> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
 <h2 class="heading" id="the-fix">
@@ -280,9 +281,13 @@ So to fix our problem we will have to tell MongoDB to use a different default co
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The most important element here is the <code>classMap</code>.
 This map overrides the previously mentioned <code>DEFAULT_BSON_TYPE_CLASS_MAP</code> and enforces general use of the <code>LocalDateTimeCodec</code> class and even when casting to <code>Object</code> MongoDB will default to instantiate the object as <code>LocalDateTime</code>.
-The three codec registries are responsible for (1) overriding the default date handling (2) refering otherwise to default codecs (3) providing a codec when casting to custom Java POJOs.
-Once setup the Spring bean injection will make sure MongoDB is appropriately configured.</p>
-<hr>
+The three codec registries are responsible for:</p>
+<ol>
+<li>overriding the default date handling</li>
+<li>refering otherwise to default codecs</li>
+<li>providing a codec when casting to custom Java POJOs</li>
+</ol>
+<p>Once setup the Spring bean injection will make sure MongoDB is appropriately configured.</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>

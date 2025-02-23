@@ -11,7 +11,7 @@ description = "A blog about artificial intelligence, natural language processing
 
 # Appearance settings
 theme = 'auto'
-colorPalette = 'catpuccin'
+colorPalette = 'base16-eighties'
 hideHeader = false
 
 # Intro on main page, content is markdown
