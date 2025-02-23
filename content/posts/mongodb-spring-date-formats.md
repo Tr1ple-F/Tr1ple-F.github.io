@@ -55,7 +55,7 @@ where our backend code would rely on MongoDB to correctly serialize the `params`
 
 ### The Issue
 When serializing the `time` field, MongoDB would correctly parse the BSON representation to `LocalDateTime` (i.e. the JSR-310 **Java 8 Date/Time API**).
-MongoDB's default handling of `BSONType.DATE_TIME` results in `java.util.Date` objects appearing in the params map. 
+MongoDB's default handling of `BSONType.DATE_TIME` results in `java.util.Date` objects appearing in the `params` map. 
 
 This forced us to manually re-cast, leading to frequent bugs and crashes.
 The date bug bothered us from the start of our project but we didn't manage to take care of it until almost 2.5 years later.
@@ -65,7 +65,7 @@ The origin of this issue is how the Java MongoDB driver deals with codecs.
 The MongoDB driver supports JSR-310 since version 3.7 [^1]; however, documents get parsed as subparts depending on which codecs fits.
 For fields this can happen completely independently of each other which means two fields could use completely different codecs.
 
-The relevant class handles codec selection for BSON documents is the `DocumentCodecProvider`.
+The relevant class handles codec selection for BSON documents is the [`DocumentCodecProvider`](https://github.com/mongodb/mongo-java-driver/blob/main/bson/src/main/org/bson/codecs/DocumentCodecProvider.java).
 It has a function `get(Class<T> clazz, CodecRegistry)` which determines the codecs that will be used throughout the encoding/decoding.
 Naturally, MongoDB has a default configuration of how BSON types should be cast to Java types (e.g. `BSONType.DOUBLE` to `java.lang.Double`).
 
