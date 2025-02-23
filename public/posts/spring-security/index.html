@@ -2,17 +2,17 @@
 <html lang="en-us"
   dir="ltr">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 
 
 
-<link rel="icon" type="image/ico" href="http://localhost:1313//favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313//favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313//favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="http://localhost:1313//android-chrome-192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313//apple-touch-icon.png">
+<link rel="icon" type="image/ico" href="https://tr1ple-f.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://tr1ple-f.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://tr1ple-f.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://tr1ple-f.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://tr1ple-f.github.io//apple-touch-icon.png">
 
 <meta name="description" content=""/>
 
@@ -20,24 +20,19 @@
 
 <title>
     
-    A Few Notes About Spring Security | Tr1ple-F&#39;s Blog
+     | Tr1ple-F&#39;s Blog
     
 </title>
 
-<link rel="canonical" href="http://localhost:1313/posts/spring-security/"/>
+<link rel="canonical" href="https://tr1ple-f.github.io/posts/spring-security/"/>
 
-<meta property="og:url" content="http://localhost:1313/posts/spring-security/">
+<meta property="og:url" content="https://tr1ple-f.github.io/posts/spring-security/">
   <meta property="og:site_name" content="Tr1ple-F&#39;s Blog">
-  <meta property="og:title" content="A Few Notes About Spring Security">
-  <meta property="og:description" content="Sharing a few lessons learned from trying to build safe software">
+  <meta property="og:title" content="Tr1ple-F&#39;s Blog">
+  <meta property="og:description" content="General Setup # CSRF Token Protection #">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-02-20T12:00:00+00:00">
-    <meta property="article:modified_time" content="2025-02-20T12:00:00+00:00">
-    <meta property="article:tag" content="Java">
-    <meta property="article:tag" content="Security">
-    <meta property="article:tag" content="Spring">
 
 
 
@@ -51,7 +46,11 @@
 
 
 
-<link rel="stylesheet" href="/assets/combined.min.40d43ac27f7fe411d73910667e495ff39d451f0c02e0ec0898a5013fe0aa06ef.css" media="all">
+<link rel="stylesheet" href="/assets/combined.min.b049a41c66c297b8ff3522b01b2edc5922f184c22d183a603feeedad62fabe52.css" media="all">
+
+
+
+
 
 
 
@@ -76,7 +75,7 @@
     
 
     <h1 class="header-title">
-        <a href="http://localhost:1313/">Tr1ple-F&#39;s Blog</a>
+        <a href="https://tr1ple-f.github.io/">Tr1ple-F&#39;s Blog</a>
     </h1>
 
     <div class="flex">
@@ -114,42 +113,22 @@
 
 
 
-<div class="breadcrumbs">
-    
-    <a href="/">Home</a>
-    <span class="breadcrumbs-separator"> / </span>
-    
-    <a href="/posts/">Posts</a>
-    <span class="breadcrumbs-separator"> / </span>
-    
-    <a href="/posts/spring-security/">A Few Notes About Spring Security</a>
-</div>
 
 
-
-<div  class="autonumber" >
+<div >
 
   <div class="single-intro-container">
 
     
 
-    <h1 class="single-title">A Few Notes About Spring Security</h1>
-    
-    <p class="single-summary">Sharing a few lessons learned from trying to build safe software</p>
+    <h1 class="single-title"></h1>
     
 
     
 
     <p class="single-readtime">
       
-      
-      
-      <time datetime="2025-02-20T12:00:00&#43;00:00">February 20, 2025</time>
-      
 
-      
-      &nbsp; · &nbsp;
-      1 min read
       
     </p>
 
@@ -160,22 +139,17 @@
   
 
   
-  <aside class="toc">
-    <p><strong>Table of contents</strong></p>
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#lorem-ipsum">Lorem ipsum</a></li>
-  </ul>
-</nav>
-  </aside>
-  
 
   
 
   <div class="single-content">
-    <h2 class="heading" id="lorem-ipsum">
-  Lorem ipsum
-  <a class="anchor" href="#lorem-ipsum">#</a>
+    <h2 class="heading" id="general-setup">
+  General Setup
+  <a class="anchor" href="#general-setup">#</a>
+</h2>
+<h2 class="heading" id="csrf-token-protection">
+  CSRF Token Protection
+  <a class="anchor" href="#csrf-token-protection">#</a>
 </h2>
 
     
@@ -187,6 +161,44 @@
 
   
   
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/swiss-corporate-law/">
+                        
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+            <div class="single-pagination-container-next">
+                <div class="single-pagination-text">
+                    <a href="/posts/mongodb-spring-date-formats/">
+                        Spring Boot, MongoDB and the Java DateTime API
+                    </a>
+                </div>
+                <div class="single-pagination-text">→</div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
 
   
 
@@ -222,26 +234,6 @@
 
   </footer>
 
-  
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
-<script defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
-
-<script defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body);"></script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false }
-      ]
-    });
-  });
-</script>
   
 
 </body>
