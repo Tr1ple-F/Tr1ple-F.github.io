@@ -2,32 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Home on Tr1ple-F&#39;s Blog</title>
-    <link>https://tr1ple-f.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content in Home on Tr1ple-F&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Feb 2025 12:00:00 +0000</lastBuildDate>
-    <atom:link href="https://tr1ple-f.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Feb 2025 12:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Binary Indexing of Binary Trees</title>
+      <link>http://localhost:1313/posts/binary-tree-indexing/</link>
+      <pubDate>Tue, 25 Feb 2025 12:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/binary-tree-indexing/</guid>
+      <description>The natural way of counting nodes</description>
+    </item>
     <item>
       <title>Spring Boot, MongoDB and the Java DateTime API</title>
-      <link>https://tr1ple-f.github.io/posts/mongodb-spring-date-formats/</link>
+      <link>http://localhost:1313/posts/mongodb-spring-date-formats/</link>
       <pubDate>Thu, 20 Feb 2025 12:00:00 +0000</pubDate>
-      <guid>https://tr1ple-f.github.io/posts/mongodb-spring-date-formats/</guid>
+      <guid>http://localhost:1313/posts/mongodb-spring-date-formats/</guid>
       <description>A quick guide on how avoid &lt;code&gt;java.util.Date&lt;/code&gt;</description>
-    </item>
-    <item>
-      <title></title>
-      <link>https://tr1ple-f.github.io/posts/spring-security/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://tr1ple-f.github.io/posts/spring-security/</guid>
-      <description>&lt;h2 class=&#34;heading&#34; id=&#34;general-setup&#34;&gt;&#xA;  General Setup&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#general-setup&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;h2 class=&#34;heading&#34; id=&#34;csrf-token-protection&#34;&gt;&#xA;  CSRF Token Protection&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#csrf-token-protection&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;</description>
-    </item>
-    <item>
-      <title></title>
-      <link>https://tr1ple-f.github.io/posts/swiss-corporate-law/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://tr1ple-f.github.io/posts/swiss-corporate-law/</guid>
-      <description>&lt;h2 class=&#34;heading&#34; id=&#34;gmbhs&#34;&gt;&#xA;  GmbH&amp;rsquo;s&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#gmbhs&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;h3 class=&#34;heading&#34; id=&#34;accounting&#34;&gt;&#xA;  Accounting&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#accounting&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h3&gt;&#xA;&lt;h3 class=&#34;heading&#34; id=&#34;organizational-m-a-e-n-g-e-l-&#34;&gt;&#xA;  Organizational M A E N G E L (?)&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#organizational-m-a-e-n-g-e-l-&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h3&gt;</description>
     </item>
   </channel>
 </rss>

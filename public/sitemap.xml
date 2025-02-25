@@ -2,32 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://tr1ple-f.github.io/</loc>
-    <lastmod>2025-02-22T12:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/tags/binary/</loc>
+    <lastmod>2025-02-25T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tr1ple-f.github.io/posts/</loc>
-    <lastmod>2025-02-22T12:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/posts/binary-tree-indexing/</loc>
+    <lastmod>2025-02-25T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tr1ple-f.github.io/tags/date/</loc>
+    <loc>http://localhost:1313/tags/datastructures/</loc>
+    <lastmod>2025-02-25T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-02-25T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2025-02-25T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-02-25T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/trees/</loc>
+    <lastmod>2025-02-25T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/date/</loc>
     <lastmod>2025-02-20T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tr1ple-f.github.io/tags/java/</loc>
+    <loc>http://localhost:1313/tags/java/</loc>
     <lastmod>2025-02-20T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tr1ple-f.github.io/tags/mongodb/</loc>
+    <loc>http://localhost:1313/tags/mongodb/</loc>
     <lastmod>2025-02-20T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tr1ple-f.github.io/tags/spring/</loc>
+    <loc>http://localhost:1313/tags/spring/</loc>
     <lastmod>2025-02-20T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tr1ple-f.github.io/posts/mongodb-spring-date-formats/</loc>
+    <loc>http://localhost:1313/posts/mongodb-spring-date-formats/</loc>
     <lastmod>2025-02-20T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tr1ple-f.github.io/tags/</loc>
-    <lastmod>2025-02-20T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tr1ple-f.github.io/posts/spring-security/</loc>
-  </url><url>
-    <loc>https://tr1ple-f.github.io/posts/swiss-corporate-law/</loc>
   </url>
 </urlset>

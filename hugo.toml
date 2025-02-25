@@ -8,6 +8,8 @@ tag = 'tags'
 
 [params]
 description = "A blog about artificial intelligence, natural language processing, writing enterprise software, law and other random thoughts."
+mermaidTheme = "default"
+mermaidDarkTheme = "dark"
 
 # Appearance settings
 theme = 'auto'

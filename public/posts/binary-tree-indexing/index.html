@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="http://localhost:1313//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="http://localhost:1313//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313//apple-touch-icon.png">
+
+<meta name="description" content=""/>
+
+
+
+<title>
+    
+    Binary Indexing of Binary Trees | Tr1ple-F&#39;s Blog
+    
+</title>
+
+<link rel="canonical" href="http://localhost:1313/posts/binary-tree-indexing/"/>
+
+<meta property="og:url" content="http://localhost:1313/posts/binary-tree-indexing/">
+  <meta property="og:site_name" content="Tr1ple-F&#39;s Blog">
+  <meta property="og:title" content="Binary Indexing of Binary Trees">
+  <meta property="og:description" content="The natural way of counting nodes">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-02-25T12:00:00+00:00">
+    <meta property="article:modified_time" content="2025-02-25T12:00:00+00:00">
+    <meta property="article:tag" content="Datastructures">
+    <meta property="article:tag" content="Binary">
+    <meta property="article:tag" content="Trees">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.b049a41c66c297b8ff3522b01b2edc5922f184c22d183a603feeedad62fabe52.css" media="all">
+
+
+
+
+
+</head>
+
+
+
+
+
+
+
+<body class="auto">
+
+  <div class="content">
+    <header>
+      
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">
+        <a href="http://localhost:1313/">Tr1ple-F&#39;s Blog</a>
+    </h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+    </header>
+
+    <main class="main">
+      
+
+
+
+
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Binary Indexing of Binary Trees</h1>
+    
+    <p class="single-summary">The natural way of counting nodes</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2025-02-25T12:00:00&#43;00:00">February 25, 2025</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      3 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#background">Background</a>
+      <ul>
+        <li><a href="#design-goals">Design Goals</a></li>
+        <li><a href="#breadth-first-method">Breadth-First Method</a></li>
+        <li><a href="#binary-indexing-method">Binary Indexing Method</a></li>
+      </ul>
+    </li>
+    <li><a href="#practical-implications">Practical Implications</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <h2 class="heading" id="background">
+  Background
+  <a class="anchor" href="#background">#</a>
+</h2>
+<p>I assume anyone who is reading this knows about binary trees. The indexing method described in this post may already be known or used in practice; however, I did not find it mentioned online. Hence, I&rsquo;ll just elaborate on how I derived it for myself.</p>
+<p>Before we start, here is a refresher on what a numbered tree might look like.</p>
+<pre class="mermaid">graph TD; 1[1] --&gt; 2[2]; 1[1] --&gt; 3[3]; 2[2] --&gt; 4[4]; 2[2] --&gt; 5[5]; 3[3] --&gt; 6[6]; 3[3] --&gt; 7[7]; 4[4] --&gt; 8[8]; 4[4] --&gt; 9[9]; 5[5] --&gt; 10[10]; 5[5] --&gt; 11[11]; 6[6] --&gt; 12[12]; 6[6] --&gt; 13[13]; 7[7] --&gt; 14[14]; 7[7] --&gt; 15[15];
+</pre>
+
+<h3 class="heading" id="design-goals">
+  Design Goals
+  <a class="anchor" href="#design-goals">#</a>
+</h3>
+<p>When &ldquo;comparing&rdquo; different indexing methods, one should consider what our goals are. In this case, the primary goal is <strong>idempotence</strong>. A node in the tree (e.g., the left child of the root node) should have the same number whether the tree has 1 or $\infty$ layers. Certainly, there could be applications where this is not required, but since I am looking at indexing on an abstract level, it seems natural to also consider any trees.</p>
+<h3 class="heading" id="breadth-first-method">
+  Breadth-First Method
+  <a class="anchor" href="#breadth-first-method">#</a>
+</h3>
+<p>The indexing method which most people might be familiar with is <strong>breadth-first order</strong>. The resulting tree would look something like this:</p>
+<pre class="mermaid">graph TD;
+    0[0] --&gt; 1[1];
+    0[0] --&gt; 2[2];
+    1[1] --&gt; 3[3];
+    1[1] --&gt; 4[4];
+    2[2] --&gt; 5[5];
+    2[2] --&gt; 6[6];
+    3[3] --&gt; 7[7];
+    3[3] --&gt; 8[8];
+    4[4] --&gt; 9[9];
+    4[4] --&gt; 10[10];
+    5[5] --&gt; 11[11];
+    5[5] --&gt; 12[12];
+    6[6] --&gt; 13[13];
+    6[6] --&gt; 14[14];
+</pre>
+
+<p>Initially, that seems reasonable. Every layer gets enumerated until moving to the next layer. In mathematical terms, if a node has index $i$, its children are at $2i+1$ (left) and $2i+2$ (right). However, let&rsquo;s think about <strong>tree traversal</strong>. How often do you process a tree layer by layer? Surely, most of the time, trees are traversed along the height of the tree, always choosing children of the current node.</p>
+<h3 class="heading" id="binary-indexing-method">
+  Binary Indexing Method
+  <a class="anchor" href="#binary-indexing-method">#</a>
+</h3>
+<p>How about we instead alternate numbering between trees? For example:</p>
+<pre class="mermaid">graph TD;
+    0[0]
+    0 --&gt; 1[1]
+    0 --&gt; 2[2]
+    1 --&gt; 3[3]
+    1 --&gt; 5[5]
+    2 --&gt; 4[4]
+    2 --&gt; 6[6]
+    3 --&gt; 7[7]
+    3 --&gt; 11[11]
+    5 --&gt; 9[9]
+    5 --&gt; 13[13]
+    4 --&gt; 8[8]
+    4 --&gt; 12[12]
+    6 --&gt; 10[10]
+    6 --&gt; 14[14]
+</pre>
+
+<p>Let&rsquo;s instead do what computer scientists do best: look at the numbers in binary.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Decimal</th>
+          <th>Binary</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0</td>
+          <td>0000</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>0001</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>0010</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>0011</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>0100</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>0101</td>
+      </tr>
+      <tr>
+          <td>6</td>
+          <td>0110</td>
+      </tr>
+      <tr>
+          <td>7</td>
+          <td>0111</td>
+      </tr>
+      <tr>
+          <td>8</td>
+          <td>1000</td>
+      </tr>
+      <tr>
+          <td>9</td>
+          <td>1001</td>
+      </tr>
+      <tr>
+          <td>10</td>
+          <td>1010</td>
+      </tr>
+      <tr>
+          <td>11</td>
+          <td>1011</td>
+      </tr>
+      <tr>
+          <td>12</td>
+          <td>1100</td>
+      </tr>
+      <tr>
+          <td>13</td>
+          <td>1101</td>
+      </tr>
+      <tr>
+          <td>14</td>
+          <td>1110</td>
+      </tr>
+  </tbody>
+</table>
+<p>To see the pattern here, let&rsquo;s just look at the index-$1$ subtree:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Decimal</th>
+          <th>Binary</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>000<strong>1</strong></td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>001<strong>1</strong></td>
+      </tr>
+      <tr>
+          <td>7</td>
+          <td>01<strong>11</strong></td>
+      </tr>
+      <tr>
+          <td>11</td>
+          <td>10<strong>11</strong></td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>010<strong>1</strong></td>
+      </tr>
+      <tr>
+          <td>9</td>
+          <td>10<strong>01</strong></td>
+      </tr>
+      <tr>
+          <td>13</td>
+          <td>11<strong>01</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>I&rsquo;ve highlighted the ending bits in this graphic. As you can see, nodes always share the same ending bits with their parents.</p>
+<h2 class="heading" id="practical-implications">
+  Practical Implications
+  <a class="anchor" href="#practical-implications">#</a>
+</h2>
+<p>I have yet to do practical benchmarking on the effectiveness of this method; however, I want to share one nice benefit for prefetching and caching. All nodes of a subtree $b&rsquo;$ end in the same offset bits, so one can effectively cache <em>exclusively</em> the nodes of a subtree by using <strong>stride prefetching</strong> with the stride appropriate to the tree depth, which might be considerably faster than random node access. This could be particularly interesting for low-latency applications where an extra memory lookup with a cache miss adds noticeable latency overhead.</p>
+
+    
+  </div>
+
+  
+  
+  
+  <script defer
+    type="module"
+    id="mermaid_script"
+    data-light-theme="default"
+    data-dark-theme="dark"
+    src='/js/mermaid.js'>
+  </script>
+  
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/mongodb-spring-date-formats/">
+                        Spring Boot, MongoDB and the Java DateTime API
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+    </main>
+  </div>
+
+  <footer>
+    
+
+    
+    <p>Powered by
+        <a href="https://gohugo.io/">Hugo</a>
+        and
+        <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+    </p>
+    
+    
+    
+
+
+  </footer>
+
+  
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+  
+
+</body>
+
+<script src="/js/theme-switch.js"></script>
+<script defer src="/js/copy-code.js"></script>
+</html>
