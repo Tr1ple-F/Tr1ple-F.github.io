@@ -7,7 +7,7 @@ theme = 'typo'
 tag = 'tags'
 
 [params]
-description = "A blog about artificial intelligence, natural language processing, writing enterprise software, law and other random thoughts."
+description = "A blog about random thoughts."
 mermaidTheme = "default"
 mermaidDarkTheme = "dark"
 
@@ -19,7 +19,7 @@ hideHeader = false
 # Intro on main page, content is markdown
 homeIntroTitle = 'Cheers!'
 homeIntroContent = """
-I am a software engineer / founder. I do research in AI/ML and love distributed systems, low level programming, and learning by debugging.
+I am a software engineer / founder. I do research in AI/ML and wrote my bachelor thesis on the [Convergence and Divergence of Language Models](https://arxiv.org/abs/2509.26643). I love distributed systems, low level programming and learning by debugging.
 """
 
 # Collection to display on home
