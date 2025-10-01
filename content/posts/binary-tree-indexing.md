@@ -15,7 +15,7 @@ hideBackToTop = false
 
 ## Background
 
-I assume anyone who is reading this knows about binary trees. The indexing method described in this post may already be known or used in practice; however, I did not find it mentioned online. Hence, I'll just elaborate on how I derived it for myself.
+*Disclaimer*: I assume anyone who is reading this knows about binary trees. The indexing method described in this post may already be known or used in practice; however, I did not find it mentioned online. Hence, I'll just elaborate on how I derived it for myself.
 
 Before we start, here is a refresher on what a numbered tree might look like.
 
@@ -25,7 +25,7 @@ graph TD; 1[1] --> 2[2]; 1[1] --> 3[3]; 2[2] --> 4[4]; 2[2] --> 5[5]; 3[3] --> 6
 
 ### Design Goals
 
-When "comparing" different indexing methods, one should consider what our goals are. In this case, the primary goal is **idempotence**. A node in the tree (e.g., the left child of the root node) should have the same number whether the tree has 1 or $\infty$ layers. Certainly, there could be applications where this is not required, but since I am looking at indexing on an abstract level, it seems natural to also consider any trees.
+When "comparing" different indexing methods, one should consider what the goal is. In this case, I was motivated to find indexing that is **idempotent** to adding new nodes. A node in the tree (e.g., the left child of the root node) should have the same number whether the tree has 1 or $\infty$ layers.
 
 ### Breadth-First Method
 
@@ -74,7 +74,7 @@ graph TD;
     6 --> 14[14]
 ```
 
-Let's instead do what computer scientists do best: look at the numbers in binary.
+If we look at the numbers in binary it looks like this:
 
 | Decimal | Binary |
 | ------- | ------ |
@@ -94,7 +94,7 @@ Let's instead do what computer scientists do best: look at the numbers in binary
 | 13      | 1101   |
 | 14      | 1110   |
 
-To see the pattern here, let's just look at the index-$1$ subtree:
+Zooming in on the index-$1$ subtree:
 
 | Decimal | Binary   |
 | ------- | -------- |
@@ -110,4 +110,4 @@ I've highlighted the ending bits in this graphic. As you can see, nodes always s
 
 ## Practical Implications
 
-I have yet to do practical benchmarking on the effectiveness of this method; however, I want to share one nice benefit for prefetching and caching. All nodes of a subtree $b'$ end in the same offset bits, so one can effectively cache _exclusively_ the nodes of a subtree by using **stride prefetching** with the stride appropriate to the tree depth, which might be considerably faster than random node access. This could be particularly interesting for low-latency applications where an extra memory lookup with a cache miss adds noticeable latency overhead.
+I have yet to do practical benchmarking on the effectiveness of this method; however, it might have a nice benefit for prefetching and caching. If all nodes of a subtree $b'$ end in the same offset bits one could effectively cache _exclusively_ the nodes of this subtree by using **stride prefetching** with the stride appropriate to the tree depth. Depending on the memory layout and nature of the application this could be faster than random node access and might be interesting for low-latency applications where an extra memory lookup with a cache miss adds noticeable latency overhead.
